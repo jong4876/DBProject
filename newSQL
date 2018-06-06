@@ -1,0 +1,245 @@
+CREATE TABLE customer(-- alt x
+	liscence_num CHAR(20),
+	name   CHAR(5) not null,
+	address      CHAR(30) not null,
+	tel      CHAR(15) not null,
+	email        CHAR(20) not null,
+	last_use    CHAR(10),
+	inform 		char(30) not null,--
+	PRIMARY KEY(liscence_num),
+	
+	FOREIGN KEY(inform) REFERENCES Campingcar(id) ON DELETE CASCADE ENABLE
+	 
+);
+--select * from CAMPINGCAR;
+
+CREATE TABLE Campingcar(
+
+               id CHAR(30),--
+               name CHAR(10) not null,
+               car_num CHAR(10) not null,
+               NOP INTEGER not null,
+               image CHAR(10) not null,
+               inform CHAR(30) ,
+               cost INTEGER not null,
+               comp_id CHAR (30) not null,
+               R_date CHAR(20),
+               PRIMARY KEY(id),
+               
+               
+               FOREIGN KEY(comp_id) REFERENCES Rental_Company(rc_id) ON DELETE CASCADE ENABLE
+);
+
+
+
+CREATE TABLE Rental_Inform(
+
+               r_num CHAR(10),
+               r_id CHAR(30)  not null,
+               r_li_num CHAR(20)  not null,
+               r_company_id CHAR(30) not null,
+               r_Start DATE not null,
+               r_day INTEGER not null,
+               r_cost INTEGER not null,
+               r_end DATE not null,
+               r_add_category CHAR(30),
+               r_add_cost INTEGER,
+               PRIMARY KEY(r_num),
+               
+               FOREIGN KEY( r_company_id) REFERENCES Rental_Company(rc_id),
+               FOREIGN KEY( r_id) REFERENCES Campingcar(id),
+               FOREIGN KEY( r_li_num) REFERENCES customer(liscence_num) ON DELETE CASCADE ENABLE
+
+);
+
+
+CREATE TABLE Rental_Company(
+
+               rc_id CHAR(30),
+               rc_name CHAR(10) not null,
+               rc_address CHAR(30) not null,
+               rc_call CHAR(12) not null,
+               rc_empname CHAR(10) not null,
+               rc_empemail CHAR(20) not null,
+               
+               PRIMARY KEY(rc_id)
+);
+
+
+CREATE TABLE Repair_Company(--사이즈수정
+               R_id CHAR(10),
+               R_name CHAR(20) not null,
+               R_address CHAR(30) not null,
+               R_call CHAR(13) not null,
+               R_empname CHAR(20) not null,
+               R_empemail CHAR(20) not null,
+ 
+               PRIMARY KEY(R_id)
+                
+
+);
+
+
+
+CREATE TABLE Repair_Inform(
+               RI_info CHAR(30),
+               RI_campingcar_id CHAR(30) not null,
+               RI_id CHAR(10) not null,
+               RI_company CHAR(30) not null,
+               RI_li_num CHAR(20) not null,
+               RI_details CHAR(30) not null, 
+               RI_date CHAR(30) not null,
+               RI_cost INTEGER not null,
+               RI_end CHAR(10),
+               RI_etc CHAR(30),
+ 
+               PRIMARY KEY(RI_info),
+               FOREIGN KEY(RI_campingcar_id) REFERENCES Campingcar(id),
+               FOREIGN KEY(RI_id) REFERENCES Repair_Company(R_id),
+               FOREIGN KEY(RI_company) REFERENCES Rental_Company(rc_id),
+               
+               FOREIGN KEY(RI_li_num) REFERENCES customer(liscence_num) ON DELETE CASCADE ENABLE
+
+);
+
+CREATE TABLE Search4(
+		company CHAR(30),
+		count_of_sell INTEGER,
+		SUM_of_sell INTEGER,
+
+		
+ 		PRIMARY KEY(company)
+);
+
+drop table Search4;
+
+
+
+--복구기능
+
+SELECT * 
+FROM Customer;
+
+INSERT INTO Customer
+SELECT * 
+FROM Customer
+AS OF TIMESTAMP(SYSTIMESTAMP-INTERVAL '120' MINUTE)
+where name = 'kim1'
+;
+
+
+
+INSERT INTO Customer VALUES ('18-602583-60', 'kim1', '서울광진구화양동427-1', '010-1234-5678', 'kim1@gamil.com','20170101','ASDFG1');
+INSERT INTO Customer VALUES ('18-602583-61', 'kim2', '서울광진구화양동427-2', '010-1234-5679', 'kim1@gamil.com','20170101','ASDFG2');
+INSERT INTO Customer VALUES ('18-602583-62', 'kim3', '서울광진구화양동427-3', '010-1234-5680', 'kim1@gamil.com','20170101','ASDFG3');
+INSERT INTO Customer VALUES ('18-602583-63', 'kim4', '서울광진구화양동427-4', '010-1234-5681', 'kim1@gamil.com','20170101','ASDFG4');
+INSERT INTO Customer VALUES ('18-602583-64', 'kim5', '서울광진구화양동427-5', '010-1234-5682', 'kim1@gamil.com','20170101','ASDFG5');
+INSERT INTO Customer VALUES ('18-602583-65', 'kim6', '서울광진구화양동427-6', '010-1234-5683', 'kim1@gamil.com','20170101','ASDFG6');
+INSERT INTO Customer VALUES ('18-602583-66', 'kim7', '서울광진구화양동427-7', '010-1234-5684', 'kim1@gamil.com','20170101','ASDFG11');
+INSERT INTO Customer VALUES ('18-602583-67', 'kim8', '서울광진구화양동427-8', '010-1234-5685', 'kim1@gamil.com','20170101','ASDFG12');
+INSERT INTO Customer VALUES ('18-602583-68', 'kim9', '서울광진구화양동427-9', '010-1234-5686', 'kim1@gamil.com','20170101','ASDFG13');
+INSERT INTO Customer VALUES ('18-602583-69', 'kim10', '서울광진구화양동427-10', '010-1234-5687', 'kim1@gamil.com','20170101','ASDFG14');
+INSERT INTO Customer VALUES ('18-602583-70', 'kim11', '서울광진구화양동427-11', '010-1234-5688', 'kim1@gamil.com','20170101','ASDFG15');
+INSERT INTO Customer VALUES ('18-602583-71', 'kim12', '서울광진구화양동427-12', '010-1234-5689', 'kim1@gamil.com','20170101','ASDFG16');
+
+
+
+
+INSERT INTO Campingcar VALUES('ASDFG1','붕붕이1호','11G1111','2','빨간중형','오토기어','300000','QWER1','20180101');
+INSERT INTO Campingcar VALUES('ASDFG2','붕붕이2호','11G1112','2','노랑중형','오토기어','300000','QWER1','20180102');
+INSERT INTO Campingcar VALUES('ASDFG3','붕붕이3호','11G1113','2','파랑중형','오토기어','300000','QWER1','20180103');
+INSERT INTO Campingcar VALUES('ASDFG4','붕붕이4호','11G1114','2','빨간중형','오토기어','300000','QWER1','20180104');
+INSERT INTO Campingcar VALUES('ASDFG5','붕붕이5호','11G1115','2','노랑중형','오토기어','300000','QWER2','20180105');
+INSERT INTO Campingcar VALUES('ASDFG6','붕붕이6호','11G1116','3','파랑중형','오토기어','350000','QWER3','20180106');
+INSERT INTO Campingcar VALUES('ASDFG7','붕붕이7호','11G1117','4','보라중형','스틱기어','400000','QWER4','20180107');
+INSERT INTO Campingcar VALUES('ASDFG8','붕붕이8호','11G1118','5','흰색대형','스틱기어','450000','QWER5','20180108');
+INSERT INTO Campingcar VALUES('ASDFG9','붕붕이9호','11G1119','6','흰색대형','스틱기어','500000','QWER6','20180109');
+INSERT INTO Campingcar VALUES('ASDFG10','붕붕이10호','11G1120','4','파랑중형','스틱기어','400000','QWER7','20180110');
+INSERT INTO Campingcar VALUES('ASDFG11','붕붕이11호','11G1121','4','파랑중형','스틱기어','400000','QWER8','20180111');
+INSERT INTO Campingcar VALUES('ASDFG12','붕붕이12호','11G1122','4','파랑중형','오토기어','450000','QWER9','20180112');
+INSERT INTO Campingcar VALUES('ASDFG13','붕붕이13호','11G1123','4','파랑중형','오토기어','450000','QWER10','20180113');
+INSERT INTO Campingcar VALUES('ASDFG14','붕붕이14호','11G1124','8','회색대형','스틱기어','800000','QWER16','20180114');
+INSERT INTO Campingcar VALUES('ASDFG15','붕붕이15호','11G1125','9','회색대형','스틱기어','900000','QWER16','20180115');
+INSERT INTO Campingcar VALUES('ASDFG16','붕붕이16호','11G1126','10','회색대형','스틱기어','1000000','QWER16','20180116');
+
+
+INSERT INTO Rental_Company VALUES('QWER1','OCMPNY1','서울시 광진구 능동 2-3','02-123-4567','Ahn1','ann1@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER2','OCMPNY2','서울시 광진구 능동 2-4','02-123-4568','Ahn2','ann2@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER3','OCMPNY3','서울시 광진구 능동 2-5','02-123-4569','Ahn3','ann3@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER4','OCMPNY4','서울시 광진구 능동 2-6','02-123-4570','Ahn4','ann4@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER5','OCMPNY5','서울시 광진구 능동 2-7','02-123-4571','Ahn5','ann5@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER6','OCMPNY6','서울시 광진구 능동 2-8','02-123-4572','Ahn6','ann6@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER7','OCMPNY7','서울시 광진구 능동 2-9','02-123-4573','Ahn7','ann7@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER8','OCMPNY8','서울시 광진구 능동 2-10','02-123-4574','Ahn8','ann8@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER9','OCMPNY9','서울시 광진구 능동 2-11','02-123-4575','Ahn9','ann9@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER10','OCMPNY10','서울시 광진구 능동 2-12','02-123-4576','Ahn10','ann10@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER11','OCMPNY11','서울시 광진구 능동 2-13','02-123-4577','Ahn11','ann11@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER12','OCMPNY12','서울시 광진구 능동 2-14','02-123-4578','Ahn12','ann12@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER13','OCMPNY13','서울시 광진구 능동 2-15','02-123-4579','Ahn13','ann13@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER14','OCMPNY14','서울시 광진구 능동 2-16','02-123-4580','Ahn14','ann14@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER15','OCMPNY15','서울시 광진구 능동 2-17','02-123-4581','Ahn15','ann15@gmail.com');
+INSERT INTO Rental_Company VALUES('QWER16','OCMPNY16','서울시 광진구 능동 2-18','02-123-4582','Ahn16','ann16@gmail.com');
+
+
+
+INSERT INTO Repair_Company VALUES('FIX1','HJSHOP1','서울 광진구 화양동 12-1','02-666-7770','park0','pk1@naver.com');
+INSERT INTO Repair_Company VALUES('FIX2','HJSHOP2','서울 광진구 화양동 12-2','02-666-7771','park1','pk2@naver.com');
+INSERT INTO Repair_Company VALUES('FIX3','HJSHOP3','서울 광진구 화양동 12-3','02-666-7772','park2','pk3@naver.com');
+INSERT INTO Repair_Company VALUES('FIX4','HJSHOP4','서울 광진구 화양동 12-4','02-666-7773','park3','pk4@naver.com');
+INSERT INTO Repair_Company VALUES('FIX5','HJSHOP5','서울 광진구 화양동 12-5','02-666-7774','park4','pk5@naver.com');
+INSERT INTO Repair_Company VALUES('FIX6','HJSHOP6','서울 광진구 화양동 12-6','02-666-7775','park5','pk6@naver.com');
+INSERT INTO Repair_Company VALUES('FIX7','HJSHOP7','서울 광진구 화양동 12-7','02-666-7776','park6','pk7@naver.com');
+INSERT INTO Repair_Company VALUES('FIX8','HJSHOP8','서울 광진구 화양동 12-8','02-666-7777','park7','pk8@naver.com');
+INSERT INTO Repair_Company VALUES('FIX9','HJSHOP9','서울 광진구 화양동 12-9','02-666-7778','park8','pk9@naver.com');
+INSERT INTO Repair_Company VALUES('FIX10','HJSHOP10','서울 광진구 화양동 12-10','02-666-7779','park9','pk10@naver.com');
+INSERT INTO Repair_Company VALUES('FIX11','HJSHOP11','서울 광진구 화양동 12-11','02-666-7780','park10','pk11@naver.com');
+INSERT INTO Repair_Company VALUES('FIX12','HJSHOP12','서울 광진구 화양동 12-12','02-666-7781','park11','pk12@naver.com');
+
+
+
+
+
+--end가 더앞에 있는 데이터 수정
+INSERT INTO Rental_Inform VALUES('RENT1','ASDFG1','18-602583-60','QWER1','18/08/01','7','300000','18/08/05','예방정비','50000');-- end가 더앞에?
+INSERT INTO Rental_Inform VALUES('RENT2','ASDFG2','18-602583-61','QWER1','18/08/01','7','300000','18/08/05','예방정비,네비탑재','100000');
+INSERT INTO Rental_Inform VALUES('RENT3','ASDFG3','18-602583-62','QWER1','18/08/01','7','300000','18/08/05','예방정비,네비탑재','100000');
+INSERT INTO Rental_Inform VALUES('RENT4','ASDFG4','18-602583-63','QWER1','18/08/01','5','300000','18/08/06','예방정비,네비탑재','100000');
+INSERT INTO Rental_Inform VALUES('RENT5','ASDFG5','18-602583-64','QWER2','18/08/03','7','300000','18/02/01','예방정비,네비탑재','100000');
+INSERT INTO Rental_Inform VALUES('RENT6','ASDFG6','18-602583-65','QWER3','18/02/04','10','350000','18/02/08','예방정비,네비탑재','150000');
+INSERT INTO Rental_Inform VALUES('RENT7','ASDFG11','18-602583-66','QWER8','18/02/05','10','400000','18/02/12','예방정비,네비탑재','150000');
+INSERT INTO Rental_Inform VALUES('RENT8','ASDFG12','18-602583-67','QWER9','18/02/06','10','450000','18/02/20','예방정비,네비탑재','150000');
+INSERT INTO Rental_Inform VALUES('RENT9','ASDFG13','18-602583-68','QWER10','18/02/07','15','450000','18/02/15','예방정비,네비탑재','150000');
+INSERT INTO Rental_Inform VALUES('RENT10','ASDFG14','18-602583-69','QWER16','18/02/09','15','800000','18/02/01','예방정비','50000');
+INSERT INTO Rental_Inform VALUES('RENT11','ASDFG15','18-602583-70','QWER16','18/02/09','15','900000','18/03/07','예방정비,파손정비','300000');
+INSERT INTO Rental_Inform VALUES('RENT12','ASDFG16','18-602583-71','QWER16','18/02/09','15','1000000','18/03/07','예방정비,파손정비','450000');
+
+--UPDATE Rental_Inform SET r_end = 20180803 where r_id = 'ASDFG3';
+
+
+INSERT INTO Repair_Inform VALUES('ENGIMFO1','ASDFG1','FIX1','QWER1','18-602583-60','예방정비','20180201','50000','20180130','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO2','ASDFG2','FIX2','QWER1','18-602583-61','예방정비','20180201','50000','20180130','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO3','ASDFG3','FIX3','QWER1','18-602583-62','예방정비','20180201','50000','20180130','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO4','ASDFG4','FIX4','QWER2','18-602583-63','예방정비','20180201','50000','20180130','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO5','ASDFG5','FIX5','QWER2','18-602583-64','예방정비','20180203','90000','20180201','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO6','ASDFG6','FIX6','QWER3','18-602583-65','예방정비','20180204','50000','20180202','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO7','ASDFG7','FIX7','QWER3','18-602583-66','예방정비','20180205','80000','20180203','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO8','ASDFG8','FIX8','QWER7','18-602583-67','예방정비','20180206','50000','20180204','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO9','ASDFG9','FIX9','QWER7','18-602583-68','예방정비','20180207','60000','20180205','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO10','ASDFG10','FIX10','QWER16','18-602583-69','예방정비','20180209','50000','20180207','엔진,타이어');
+INSERT INTO Repair_Inform VALUES('ENGIMFO11','ASDFG11','FIX11','QWER16','18-602583-70','예방정비,파손정비','20180215','300000','20180215','축전지');
+INSERT INTO Repair_Inform VALUES('ENGIMFO12','ASDFG12','FIX12','QWER16','18-602583-71','예방정비,파손정비','20180215','450000','20180215','브레이크,범퍼');
+
+truncate table Rental_Company;
+select * from Repair_Company;
+
+select liscence_num, name, tel from customer where liscence_num in (select r_li_num from Rental_Inform where ((r_Start+r_day) >= (r_end)));
+--20180602
+
+
+drop table Repair_Inform;
+drop table Rental_Inform;
+drop table Customer;
+drop table CampingCar;
+drop table Rental_Company;
+drop table Repair_Company;
+
