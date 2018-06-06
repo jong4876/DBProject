@@ -1,3 +1,3 @@
 # DBProject
 Campincar project
-campcampcamp!
+let's make a Campingcar rent system with java, oracle DB!
